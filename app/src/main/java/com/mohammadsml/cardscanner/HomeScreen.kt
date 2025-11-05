@@ -2,6 +2,7 @@ package com.mohammadsml.cardscanner
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -33,20 +36,23 @@ fun HomeScreen(
     items: List<RecognizeItem>
 ) {
 
-    if (items.size == 0){
-        AboutScreen()
-    }else {
+    val aboutState = remember { mutableStateOf(false) }
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    Brush.verticalGradient(
-                        listOf(Color(0xFF1C0202), Color(0xFF050505))
-                    )
-                ),
-            contentAlignment = Alignment.Center
-        ) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    listOf(Color(0xFF1C0202), Color(0xFF050505))
+                )
+            ),
+        contentAlignment = Alignment.Center
+    ) {
+        if (aboutState.value){
+            AboutScreen(
+                pageState = {aboutState.value = false}
+            )
+        }else {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -65,10 +71,15 @@ fun HomeScreen(
                             Text("Card Scanner", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
                             Text("Recognize your text or photo", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                         }
+
                         Icon(
-                            painter = painterResource(R.drawable.ic_github),
+                            painter = painterResource(R.drawable.ic_about),
                             contentDescription = "",
+                            tint = Color.White,
                             modifier = Modifier
+                                .clickable {
+                                    aboutState.value = true
+                                }
                                 .size(55.dp)
                                 .background(
                                     Color.White.copy(alpha = 0.08f),
@@ -86,6 +97,16 @@ fun HomeScreen(
                     }
                 }
 
+                item {
+                    if (items.size == 0){
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            Text("not found 404 :(", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp,
+                                modifier = Modifier.align(alignment = Alignment.Center).padding(top = 100.dp))
+                        }
+
+                    }
+                }
+
                 itemsIndexed(items) { _, item ->
                     CardItem(item = item)
                 }
@@ -99,15 +120,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     MaterialTheme(colorScheme = darkColorScheme()) {
-        HomeScreen(
-            listOf(
-                RecognizeItem.init(),
-                RecognizeItem.init(),
-                RecognizeItem.init(),
-                RecognizeItem.init(),
-                RecognizeItem.init(),
-                RecognizeItem.init()
-            )
-        )
+        HomeScreen(RecognizeItem.test())
     }
 }

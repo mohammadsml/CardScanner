@@ -46,8 +46,8 @@ class RecognizeText() {
                         sourceImage = Uri.EMPTY,
                         sourceText = text,
                         detectType = RecognizeItem.DetectType.TEXT,
-                        bankLogo = "ic_tejarat".getResourceId(),
-                        bankKey = "ic_tejarat",
+                        bankLogo = "ic_iban".getResourceId(),
+                        bankKey = "ic_iban",
                         colorLight = "" ,
                         colorDark = "",
                         name = "",
@@ -62,8 +62,8 @@ class RecognizeText() {
                         sourceImage = Uri.EMPTY,
                         sourceText = text,
                         detectType = RecognizeItem.DetectType.TEXT,
-                        bankLogo = "ic_tejarat".getResourceId(),
-                        bankKey = "ic_tejarat",
+                        bankLogo = "".getResourceId(),
+                        bankKey = "",
                         colorLight = "" ,
                         colorDark = "",
                         name = "",
@@ -115,8 +115,8 @@ class RecognizeText() {
                                 sourceImage = it,
                                 sourceText = text,
                                 detectType = RecognizeItem.DetectType.IMAGE,
-                                bankLogo = "ic_tejarat".getResourceId(),
-                                bankKey = "ic_tejarat",
+                                bankLogo = "ic_iban".getResourceId(),
+                                bankKey = "ic_iban",
                                 colorLight = "" ,
                                 colorDark = "",
                                 name = "",
@@ -131,8 +131,8 @@ class RecognizeText() {
                                 sourceImage = it,
                                 sourceText = text,
                                 detectType = RecognizeItem.DetectType.IMAGE,
-                                bankLogo = "ic_tejarat".getResourceId(),
-                                bankKey = "ic_tejarat",
+                                bankLogo = "ic_iban".getResourceId(),
+                                bankKey = "ic_iban",
                                 colorLight = "" ,
                                 colorDark = "",
                                 name = "",
@@ -451,7 +451,8 @@ fun String.getResourceId(isWhite: Boolean = false): Int {
             "ic_sepah" -> if (isWhite) R.drawable.ic_sepah_white else R.drawable.ic_sepah
             "ic_tosee" -> if (isWhite) R.drawable.ic_tosee_white else R.drawable.ic_tosee
             "ic_toseesaderat" -> if (isWhite) R.drawable.ic_toseesaderat_white else R.drawable.ic_toseesaderat
-            else -> if (isWhite) R.drawable.ic_tejarat_white else R.drawable.ic_tejarat
+            "ic_iban" -> if (isWhite) R.drawable.ic_iban else R.drawable.ic_iban
+            else -> if (isWhite) R.drawable.ic_iban else R.drawable.ic_iban
         }
 
         resourceId

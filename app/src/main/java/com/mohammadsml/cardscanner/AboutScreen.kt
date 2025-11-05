@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -36,7 +37,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun AboutScreen() {
+fun AboutScreen(
+    pageState: () -> Unit = {}
+) {
 
     val context = LocalContext.current
     val githubUrl = remember { mutableStateOf("https://github.com/mohammadsml/CardScanner") }
@@ -52,6 +55,32 @@ fun AboutScreen() {
             ),
         contentAlignment = Alignment.Center
     ) {
+
+        Icon(
+            painter = painterResource(R.drawable.ic_scan),
+            contentDescription = "",
+            tint = Color.White,
+            modifier = Modifier
+                .align(alignment = Alignment.TopEnd)
+                .padding(end = 16.dp, top = 50.dp)
+                .clickable {
+                    pageState()
+                }
+                .size(55.dp)
+                .background(
+                    Color.White.copy(alpha = 0.08f),
+                    shape = RoundedCornerShape(24.dp)
+                )
+                .border(
+                    width = 1.dp,
+                    brush = Brush.linearGradient(
+                        listOf(Color.White.copy(alpha = 0.4f), Color.Transparent)
+                    ),
+                    shape = RoundedCornerShape(24.dp)
+                )
+                .padding(10.dp),
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxWidth(0.85f)
@@ -71,7 +100,7 @@ fun AboutScreen() {
                 )
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
-        )  {
+        ) {
             Text(
                 text = "Featured for banking services",
                 color = Color.Gray,
@@ -81,7 +110,7 @@ fun AboutScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-                Text("CARD SCANNER", color = Color.White, fontWeight = FontWeight.Bold , fontSize = 28.sp)
+            Text("CARD SCANNER", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 28.sp)
 
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -141,7 +170,7 @@ fun AboutScreen() {
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                modifier = Modifier.clickable{
+                modifier = Modifier.clickable {
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkedinUrl.value))
                     context.startActivity(intent)
                 },

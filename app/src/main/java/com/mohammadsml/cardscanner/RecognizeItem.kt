@@ -24,21 +24,64 @@ data class RecognizeItem(
             name = "",
             colorLight = "",
             colorDark = "",
-            source = "6219861902063881",
+            source = "6104330000008989",
             transferType = TransferType.CARD,
-            sourceImage = Uri.parse("content://media/external/images/media/1000000043"),
-            bankKey = "ic_city",
-            sourceText =
-            "IR2 10120020000009563015030 \n" +
-                    "6 104338926968989 \n" +
-                    "585983108294593 1 \n" +
-                    "IR810180000000008275510468 \n" +
-                    "09153008 183 \n" +
-                    "6221064200288526 \n" +
-                    "09151234713 \n",
-            bankLogo = "ic_me".getResourceId(),
+            sourceImage = Uri.parse(""),
+            bankKey = "ic_mellat",
+            sourceText = "",
+            bankLogo = "ic_mellat".getResourceId(),
             detectType = DetectType.TEXT,
+        )
 
+        fun test() = listOf(
+            RecognizeItem(
+                name = "",
+                colorLight = "",
+                colorDark = "",
+                source = "6104330000008989",
+                transferType = TransferType.CARD,
+                sourceImage = Uri.parse(""),
+                bankKey = "ic_mellat",
+                sourceText = "",
+                bankLogo = "ic_mellat".getResourceId(),
+                detectType = DetectType.TEXT,
+            ),
+            RecognizeItem(
+                name = "",
+                colorLight = "",
+                colorDark = "",
+                source = "6219860000003881",
+                transferType = TransferType.CARD,
+                sourceImage = Uri.parse(""),
+                bankKey = "ic_saman",
+                sourceText = "",
+                bankLogo = "ic_saman".getResourceId(),
+                detectType = DetectType.TEXT,
+            ),
+            RecognizeItem(
+                name = "",
+                colorLight = "",
+                colorDark = "",
+                source = "IR210120020000000000015030",
+                transferType = TransferType.IBAN,
+                sourceImage = Uri.parse(""),
+                bankKey = "ic_iban",
+                sourceText = "",
+                bankLogo = "ic_iban".getResourceId(),
+                detectType = DetectType.TEXT,
+            ),
+            RecognizeItem(
+                name = "",
+                colorLight = "",
+                colorDark = "",
+                source = "6393470000003830",
+                transferType = TransferType.CARD,
+                sourceImage = Uri.parse(""),
+                bankKey = "ic_pasargad",
+                sourceText = "",
+                bankLogo = "ic_pasargad".getResourceId(),
+                detectType = DetectType.TEXT,
+            ),
         )
     }
 
