@@ -27,7 +27,7 @@ data class RecognizeItem(
             source = "810180000000008275510468",
             transferType = TransferType.IBAN,
             sourceImage = Uri.parse("content://media/external/images/media/1000000043"),
-            bankKey = "ic_mellat",
+            bankKey = "ic_city",
             sourceText =
             "IR2 10120020000009563015030 \n" +
                     "6 104338926968989 \n" +
@@ -36,7 +36,7 @@ data class RecognizeItem(
                     "09153008 183 \n" +
                     "6221064200288526 \n" +
                     "09151234713 \n",
-            bankLogo = "ic_mellat".getResourceId(),
+            bankLogo = "ic_me".getResourceId(),
             detectType = DetectType.TEXT,
 
         )

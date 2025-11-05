@@ -36,7 +36,7 @@ fun AboutScreen() {
             .fillMaxSize()
             .background(
                 Brush.verticalGradient(
-                    listOf(Color(0xFF3A0404), Color(0xFF050505))
+                    listOf(Color(0xFF1C0202), Color(0xFF050505))
                 )
             ),
         contentAlignment = Alignment.Center

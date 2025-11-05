@@ -9,6 +9,9 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import java.io.IOException
 import java.util.regex.Pattern
+import org.iban4j.Iban
+import org.iban4j.IbanFormat
+import org.iban4j.IbanUtil
 
 
 class RecognizeText() {
@@ -276,7 +279,9 @@ class RecognizeText() {
             val compiledPattern = Pattern.compile(pattern, Pattern.MULTILINE)
             val matcher = compiledPattern.matcher(processedMessage)
             while (matcher.find()) {
-                result.add(matcher.group(1))
+                if (matcher.group(1).isValidCard()){
+                    result.add(matcher.group(1))
+                }
             }
         }
         return if (result.isEmpty()) null else result
@@ -321,15 +326,43 @@ class RecognizeText() {
             "((IR|ir)([0-9]{2})(013)([0-9]{19}))",
             "((IR|ir)([0-9]{2})(014)([0-9]{19}))",
             "((IR|ir)([0-9]{2})(012)([0-9]{19}))",
-            "((IR|ir)([0-9]{2})(070)([0-9]{19}))"
+            "((IR|ir)([0-9]{2})(070)([0-9]{19}))",
+            /*"(([0-9]{2})(078)([0-9]{19}))",
+            "(([0-9]{2})(066)([0-9]{19}))",
+            "(([0-9]{2})(064)([0-9]{19}))",
+            "(([0-9]{2})(063)([0-9]{19}))",
+            "(([0-9]{2})(060)([0-9]{19}))",
+            "(([0-9]{2})(061)([0-9]{19}))",
+            "(([0-9]{2})(056)([0-9]{19}))",
+            "(([0-9]{2})(053)([0-9]{19}))",
+            "(([0-9]{2})(052)([0-9]{19}))",
+            "(([0-9]{2})(057)([0-9]{19}))",
+            "(([0-9]{2})(058)([0-9]{19}))",
+            "(([0-9]{2})(051)([0-9]{19}))",
+            "(([0-9]{2})(059)([0-9]{19}))",
+            "(([0-9]{2})(054)([0-9]{19}))",
+            "(([0-9]{2})(010)([0-9]{19}))",
+            "(([0-9]{2})(022)([0-9]{19}))",
+            "(([0-9]{2})(021)([0-9]{19}))",
+            "(([0-9]{2})(020)([0-9]{19}))",
+            "(([0-9]{2})(018)([0-9]{19}))",
+            "(([0-9]{2})(017)([0-9]{19}))",
+            "(([0-9]{2})(015)([0-9]{19}))",
+            "(([0-9]{2})(011)([0-9]{19}))",
+            "(([0-9]{2})(013)([0-9]{19}))",
+            "(([0-9]{2})(014)([0-9]{19}))",
+            "(([0-9]{2})(012)([0-9]{19}))",
+            "(([0-9]{2})(070)([0-9]{19}))"*/
         )
 
         for (pattern in patterns) {
             val compiledPattern = Pattern.compile(pattern, Pattern.MULTILINE)
             val matcher = compiledPattern.matcher(cleanedMessage)
             while (matcher.find()) {
-                val textResult = matcher.group(1).replace("IR", "")
-                result.add(textResult)
+                if (matcher.group(1).isIban()) {
+                    val textResult = matcher.group(1)
+                    result.add(textResult)
+                }
             }
         }
         return if (result.isEmpty()) null else result
@@ -424,5 +457,73 @@ fun String.getResourceId(isWhite: Boolean = false): Int {
         resourceId
     } else {
         if (isWhite) R.drawable.ic_tejarat_white else R.drawable.ic_tejarat
+    }
+}
+
+fun String.panFormatter(space: Int = 1, isDigitOnly: Boolean = true): String {
+    val blockLengths = intArrayOf(4, 4, 4, 4)
+    var unFormattedPan: String
+    if (this.isEmpty()) return ""
+    val unFormattedSeq: String = if (isDigitOnly) this.replace("[^0-9]".toRegex(), "") else this
+    if (unFormattedSeq.isEmpty()) {
+        return ""
+    }
+    unFormattedPan = unFormattedSeq
+    if (unFormattedPan.length > 16) {
+        unFormattedPan = unFormattedSeq.substring(0, 16)
+    }
+    val formatted = StringBuilder()
+    formatted.append("\u200E")
+    var blockIndex = 0
+    var currentBlock = 0
+    for (element in unFormattedPan) {
+        if (currentBlock == blockLengths[blockIndex]) {
+            repeat((0..space).count()) {
+                formatted.append(" ")
+            }
+            currentBlock = 0
+            blockIndex++
+        }
+        formatted.append(element)
+        currentBlock++
+    }
+    return formatted.toString()
+}
+
+fun String.isValidCard(): Boolean {
+    return if (this.length == 16) {
+        var sum = 0
+        var isOdd = true
+        for (char in this.toCharArray()) {
+            val digit: Int = try {
+                char.toString().toInt()
+            } catch (e: NumberFormatException) {
+                return false
+            }
+            sum += if (isOdd) (if (digit * 2 > 9) digit * 2 - 9 else digit * 2) else digit
+            isOdd = !isOdd
+        }
+        sum % 10 == 0
+    } else {
+        false
+    }
+}
+
+fun String.isIban(): Boolean {
+    return try {
+
+        IbanUtil.validate(this.uppercase())
+        true
+    } catch (exception: Exception) {
+        false
+    }
+}
+
+fun String.ibanFormatter(): String {
+    return try {
+        val iban = Iban.valueOf(this, IbanFormat.None)
+        iban.toFormattedString()
+    } catch (exception: Exception) {
+        ""
     }
 }
