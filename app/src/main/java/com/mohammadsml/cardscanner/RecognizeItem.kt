@@ -24,8 +24,8 @@ data class RecognizeItem(
             name = "",
             colorLight = "",
             colorDark = "",
-            source = "810180000000008275510468",
-            transferType = TransferType.IBAN,
+            source = "6219861902063881",
+            transferType = TransferType.CARD,
             sourceImage = Uri.parse("content://media/external/images/media/1000000043"),
             bankKey = "ic_city",
             sourceText =

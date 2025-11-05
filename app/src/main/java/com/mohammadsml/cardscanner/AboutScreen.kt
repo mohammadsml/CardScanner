@@ -1,7 +1,10 @@
 package com.mohammadsml.cardscanner
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,10 +21,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,6 +37,11 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun AboutScreen() {
+
+    val context = LocalContext.current
+    val githubUrl = remember { mutableStateOf("https://github.com/mohammadsml/CardScanner") }
+    val linkedinUrl = remember { mutableStateOf("https://www.linkedin.com/in/mohammadreza-safarmohammadloo-75aa0a83") }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -70,16 +81,15 @@ fun AboutScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-
                 Text("CARD SCANNER", color = Color.White, fontWeight = FontWeight.Bold , fontSize = 28.sp)
 
 
             Spacer(modifier = Modifier.height(20.dp))
 
             Text(
-                text = "Card, IBAN, Phone Number\ndetect",
+                text = "Card, IBAN, Phone Number\nrecognition from text or image",
                 color = Color.White,
-                fontSize = 20.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
@@ -87,7 +97,7 @@ fun AboutScreen() {
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Just share your photo or text within the app.",
+                text = "Just share your text or photo to the app",
                 color = Color.Gray,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center
@@ -96,7 +106,10 @@ fun AboutScreen() {
             Spacer(modifier = Modifier.height(12.dp))
 
             Button(
-                onClick = { /* TODO: Navigate or open link */ },
+                onClick = {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl.value))
+                    context.startActivity(intent)
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 modifier = Modifier
                     .height(48.dp)
@@ -128,6 +141,10 @@ fun AboutScreen() {
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
+                modifier = Modifier.clickable{
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkedinUrl.value))
+                    context.startActivity(intent)
+                },
                 text = "Linkedin",
                 color = Color.White,
                 fontSize = 32.sp,
