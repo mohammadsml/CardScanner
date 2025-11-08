@@ -1,21 +1,32 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# --- Compose rule ---
+-dontwarn androidx.compose.**
+-keep class androidx.compose.** { *; }
+-keep class androidx.activity.compose.** { *; }
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# --- Material3 & UI ---
+-keep class androidx.compose.material3.** { *; }
+-keep class androidx.compose.ui.tooling.preview.PreviewParameterProvider { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# --- Iban4j ---
+-keep class org.iban4j.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# --- MLKit & Play Services ---
+-keep class com.google.mlkit.** { *; }
+-keep interface com.google.mlkit.** { *; }
+-dontwarn com.google.mlkit.**
+
+# --- Reflection / Kotlin ---
+-keepattributes *Annotation*
+-keep class kotlin.Metadata { *; }
+
+# --- App entry point ---
+-keep class com.mohammadsml.cardscanner.** { *; }
+
+# --- Reduce logs ---
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+    public static *** i(...);
+}
+
+# --- Clean up ---

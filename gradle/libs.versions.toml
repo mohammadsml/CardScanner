@@ -12,6 +12,7 @@ playServicesMlkitTextRecognition = "19.0.1"
 textRecognition = "16.0.1"
 kotlinPlugin = "2.2.21"
 iban4j = "3.2.7-RELEASE"
+foundation = "1.9.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,7 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 play-services-mlkit-text-recognition = { module = "com.google.android.gms:play-services-mlkit-text-recognition", version.ref = "playServicesMlkitTextRecognition" }
 text-recognition = { module = "com.google.mlkit:text-recognition", version.ref = "textRecognition" }
 iban4j = { module = "org.iban4j:iban4j", version.ref = "iban4j" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
